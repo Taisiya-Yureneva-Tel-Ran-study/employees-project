@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import AddEmployeePage from "../pages/AddEmployeePage";
-import Statistics from "../pages/Statistics";
 import AgeStatisticsPage from "../pages/AgeStatisticsPage";
 import SalaryStatisticsPage from "../pages/SalaryStatisticsPage";
 import DepartmentStatisticsPage from "../pages/DepartmentStatisticsPage";
 import Layout from "../pages/Layout";
+import Statistics from "../pages/Statistics";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,4 +22,5 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
 export default router;
