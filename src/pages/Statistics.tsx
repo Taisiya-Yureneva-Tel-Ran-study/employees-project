@@ -1,8 +1,10 @@
-import React from 'react'
+import { Outlet } from 'react-router-dom';
 
 function Statistics() {
   return (
-    <div>Statistics</div>
+    <div>
+      <Outlet />
+    </div>
   )
 }
 
