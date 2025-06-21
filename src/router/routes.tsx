@@ -5,7 +5,7 @@ import AgeStatisticsPage from "../pages/AgeStatisticsPage";
 import SalaryStatisticsPage from "../pages/SalaryStatisticsPage";
 import DepartmentStatisticsPage from "../pages/DepartmentStatisticsPage";
 import Layout from "../pages/Layout";
-import Statistics from "../pages/Statistics";
+import StatisticsPage from "../pages/StatisticsPage";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <HomePage /> },
       { path: "add", element: <AddEmployeePage /> },
-      { path: "statistics", element: <Statistics /> , children:[
+      { path: "statistics", element: <StatisticsPage /> , children:[
         {path:"age", element:<AgeStatisticsPage/>},
         {path:"salary", element:<SalaryStatisticsPage/>},
         {path:"department", element:<DepartmentStatisticsPage/>}
