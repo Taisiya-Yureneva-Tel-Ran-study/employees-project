@@ -1,0 +1,7 @@
+{
+    "departments": ["IT", "HR", "Finance", "Marketing", "Sales"],
+    "minSalary": 5000,
+    "maxSalary": 50000,
+    "minAge": 20,
+    "maxAge": 72
+}
