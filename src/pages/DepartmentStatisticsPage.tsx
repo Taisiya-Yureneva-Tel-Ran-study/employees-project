@@ -1,10 +1,8 @@
 import { Employee } from "../model/dto-types";
-import { AxiosError } from "axios";
-import { useQuery } from "@tanstack/react-query";
-import apiClient from "../services/ApiClientJsonServer";
 import _ from "lodash";
 import DepartmentStatisticsTable from "../components/DepartmentStatisticsTable";
 import { getAge } from "../util/functions";
+import useEmployee from "../hooks/useEmployee";
 export interface DepartmentInfo {
   department: string;
   nEmployees: number;
@@ -12,11 +10,7 @@ export interface DepartmentInfo {
   avgAge: number;
 }
 const DepartmentStatisticsPage = () => {
-  const { data: employees } = useQuery<Employee[], AxiosError>({
-    queryKey: ["employees"],
-    queryFn: () => apiClient.getAll(),
-    staleTime: 3600_000,
-  });
+  const { data: employees } = useEmployee();
   const groupObj = _.groupBy(employees, "department");
   const depStatistics: DepartmentInfo[] = getDepStatistics(groupObj);
   return (
