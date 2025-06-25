@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from "axios";
 import { Employee, SearchObject } from "../model/dto-types";
 
 export interface Updater {
@@ -5,7 +6,7 @@ export interface Updater {
     fields: Partial<Employee>
 }
 export default interface ApiClient {
-    getAll(searchObject?: SearchObject): Promise<Employee[]>;
+    getAll(params?: AxiosRequestConfig): Promise<Employee[]>;
     getEmployee(id: string): Promise<Employee>
     addEmployee(empl: Employee): Promise<Employee>;
     deleteEmployee(id: string): Promise<Employee>;

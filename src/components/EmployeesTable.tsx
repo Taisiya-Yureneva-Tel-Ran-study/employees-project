@@ -1,4 +1,4 @@
-import { MutationFunction, useQuery } from "@tanstack/react-query";
+import { MutationFunction } from "@tanstack/react-query";
 import { Avatar, Spinner, Stack, Table, Text, Button} from "@chakra-ui/react";
 import { useColorModeValue } from "../components/ui/color-mode";
 import { FC } from "react";

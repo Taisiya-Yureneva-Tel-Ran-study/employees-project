@@ -19,11 +19,14 @@ const useEmployeeFilters = create<EmployeeFilters>(set => ({
     salaryTo: null,
     ageFrom: null,
     ageTo: null,
-    setDepartment: (department) => set({ department }),
-    setSalaryFrom: (salaryFrom) => set({ salaryFrom }),
-    setSalaryTo: (salaryTo) => set({ salaryTo }),
-    setAgeFrom: (ageFrom) => set({ ageFrom }),
-    setAgeTo: (ageTo) => set({ ageTo })
+    setDepartment: (dept) => {
+        set((state) => { return (state.department === dept ? state : {...state, department: dept}) });
+    },
+    setSalaryFrom: (salaryFrom) => set((state) => {return (state.salaryFrom === salaryFrom) ? state : {...state, salaryFrom} }),
+    setSalaryTo: (salaryTo) => set((state) => { return (state.salaryTo === salaryTo) ? state : {...state, salaryTo} }),
+    setAgeFrom: (ageFrom) => set((state) => {
+        return (state.ageFrom === ageFrom ? state : { ...state, ageFrom })}),
+    setAgeTo: (ageTo) => set((state) => { return (state.ageTo === ageTo ? state : { ...state, ageTo })}),
 }))
 
 export default useEmployeeFilters;

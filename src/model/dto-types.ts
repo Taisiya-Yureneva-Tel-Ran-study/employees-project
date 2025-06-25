@@ -6,6 +6,7 @@ export interface Employee {
     birthDate: string;
     salary: number;
 }
+
 export interface SearchObject {
     department?: string;
     minSalary?: number;

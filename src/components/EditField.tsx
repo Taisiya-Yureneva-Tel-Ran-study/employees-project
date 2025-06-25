@@ -15,7 +15,8 @@ interface Props {
 const EditField: FC<Props> = ({submitter, field, prevValue}) => {
     const [editing, setEditing] = useState<boolean>(false);
     const [value, setValue] = useState<string | number>(prevValue);
-    const {register, handleSubmit} = useForm<Employee>({defaultValues: {department: field === "department" ? prevValue as string : undefined,
+    const {register, handleSubmit} = useForm<Employee>({defaultValues: {
+        department: field === "department" ? prevValue as string : undefined,
         salary: field === "salary" ? prevValue as number : undefined
     }});
 
