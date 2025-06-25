@@ -1,4 +1,4 @@
-import { SearchObject, Employee } from "../model/dto-types";
+import { Employee } from "../model/dto-types";
 import ApiClient, { Updater } from "./ApiClient";
 import axios, { AxiosRequestConfig } from "axios";
 
