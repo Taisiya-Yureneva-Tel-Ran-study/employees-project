@@ -9,17 +9,15 @@ export default function useEmployee() {
     const query = useEmployeeFilters();
     const config: AxiosRequestConfig = {params: {
         department: query.department,
-        minSalary: query.salaryFrom,
-        maxSalary: query.salaryTo,
-        birthdateFrom: (query.ageTo ? getDateFromAge(query.ageTo) : null),
-        birthDateTo: (query.ageFrom ? getDateFromAge(query.ageFrom) : null),
+        salary_gte: query.salaryFrom,
+        salary_lte: query.salaryTo,
+        birthDate_gte: (query.ageTo ? getDateFromAge(query.ageTo) : null),
+        birthDate_lte: (query.ageFrom ? getDateFromAge(query.ageFrom) : null),
     }}
 
     const qryKey: any[] = ['employees'];
     qryKey.push(config);
 
-    console.log("query key", qryKey);
-    
     return useQuery<Employee[], Error>({
         queryKey: qryKey,
         queryFn: async () => apiClient.getAll(config),

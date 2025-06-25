@@ -1,4 +1,4 @@
-import { Button, Field, HStack, NumberInput } from '@chakra-ui/react'
+import { Button, Field, HStack, NumberInput, VStack } from '@chakra-ui/react'
 import { maxAge, minAge } from '../../config/employees-config.json'
 import { FC, useState } from 'react'
 import useEmployeeFilters from '../state-management/store'
@@ -38,7 +38,13 @@ const AgeFilter: FC = () => {
           <NumberInput.Input {...register("ageToInput", { valueAsNumber: true })} />
         </NumberInput.Root>
       </Field.Root>
+      <VStack>
       <Button type="submit" disabled={!editing} variant={"outline"}>Find</Button>
+      <Button type="reset" onClick={() => {
+        setAgeRange(minAge, maxAge);
+        setEditing(false);
+      }} variant={"outline"}>Reset</Button>
+      </VStack>
     </HStack>
   )
 }

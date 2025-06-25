@@ -23,6 +23,11 @@ const SelectDept: FC = () => {
         <Menu.Positioner>
           <MotionComponent duration={0.5}>
           <Menu.Content>
+            <Menu.Item key={"all"} value={"all"} onClick={() => {
+                setDepartment(null); 
+                setIsOpen(false);}}>
+              All departments
+            </Menu.Item>
             {employeesConfig.departments?.map((d) => <Menu.Item key={d} value={d} onClick={() => {
                 setDepartment(d); 
                 setIsOpen(false);}}>

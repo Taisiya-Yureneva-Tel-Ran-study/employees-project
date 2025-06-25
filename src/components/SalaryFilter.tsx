@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import useEmployeeFilters from '../state-management/store';
 import { useForm } from 'react-hook-form';
-import { Button, Field, HStack, NumberInput } from '@chakra-ui/react';
+import { Button, Field, HStack, NumberInput, VStack } from '@chakra-ui/react';
 import { minSalary, maxSalary } from "../../config/employees-config.json"
 
 const SalaryFilter: FC = () => {
@@ -37,7 +37,13 @@ const SalaryFilter: FC = () => {
           <NumberInput.Input {...register("salaryToInput", { valueAsNumber: true })} />
         </NumberInput.Root>
       </Field.Root>
-      <Button type="submit" disabled={!editing} variant={"outline"}>Find</Button>
+      <VStack>
+        <Button type="submit" disabled={!editing} variant={"outline"}>Find</Button>
+        <Button type="reset" onClick={() => {
+          setSalaryRange(minSalary, maxSalary);
+          setEditing(false);
+        }} variant={"outline"}>Reset</Button>
+      </VStack>
     </HStack>
   )
 }
