@@ -6,16 +6,13 @@ import { minSalary, maxSalary } from "../../config/employees-config.json"
 
 const SalaryFilter: FC = () => {
   const [editing, setEditing] = useState<boolean>(false);
-  const { setSalaryFrom } = useEmployeeFilters();
-  const { setSalaryTo } = useEmployeeFilters();
+  const { setSalaryRange } = useEmployeeFilters();
   const { handleSubmit, register } = useForm<{ salaryFromInput: number, salaryToInput: number }>();
 
   return (
     <HStack as="form" onSubmit={handleSubmit((data) => {
-      console.log("submitting", data);
       setEditing(false);
-      setSalaryFrom(Number(data.salaryFromInput));
-      setSalaryTo(data.salaryToInput);
+      setSalaryRange(data.salaryFromInput, data.salaryToInput);
     })}>
       <Field.Root>
         <Field.Label>Salary from</Field.Label>

@@ -7,10 +7,8 @@ interface EmployeeFilters {
     ageFrom: number | null;
     ageTo: number | null;
     setDepartment: (department: string | null) => void;
-    setSalaryFrom: (salaryFrom: number | null) => void;
-    setSalaryTo: (salaryTo: number | null) => void;
-    setAgeFrom: (ageFrom: number | null) => void;
-    setAgeTo: (ageTo: number | null) => void;
+    setSalaryRange: (salaryFrom: number | null, salaryTo: number | null) => void;
+    setAgeRange: (ageFrom: number | null, ageTo: number | null) => void;
 }
 
 const useEmployeeFilters = create<EmployeeFilters>(set => ({
@@ -22,11 +20,8 @@ const useEmployeeFilters = create<EmployeeFilters>(set => ({
     setDepartment: (dept) => {
         set((state) => { return (state.department === dept ? state : {...state, department: dept}) });
     },
-    setSalaryFrom: (salaryFrom) => set((state) => {return (state.salaryFrom === salaryFrom) ? state : {...state, salaryFrom} }),
-    setSalaryTo: (salaryTo) => set((state) => { return (state.salaryTo === salaryTo) ? state : {...state, salaryTo} }),
-    setAgeFrom: (ageFrom) => set((state) => {
-        return (state.ageFrom === ageFrom ? state : { ...state, ageFrom })}),
-    setAgeTo: (ageTo) => set((state) => { return (state.ageTo === ageTo ? state : { ...state, ageTo })}),
+    setSalaryRange: (salaryFrom, salaryTo) => set((state) => { return (state.salaryFrom === salaryFrom && state.salaryTo === salaryTo ? state : { ...state, salaryFrom, salaryTo })}),
+    setAgeRange: (ageFrom, ageTo) => set((state) => { return (state.ageFrom === ageFrom && state.ageTo === ageTo ? state : { ...state, ageFrom, ageTo })}),
 }))
 
 export default useEmployeeFilters;

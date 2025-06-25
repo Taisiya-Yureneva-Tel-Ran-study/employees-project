@@ -6,16 +6,13 @@ import { useForm } from 'react-hook-form'
 
 const AgeFilter: FC = () => {
   const [editing, setEditing] = useState<boolean>(false);
-  const { setAgeFrom } = useEmployeeFilters();
-  const { setAgeTo } = useEmployeeFilters();
+  const { setAgeRange } = useEmployeeFilters();
   const { handleSubmit, register } = useForm<{ ageFromInput: number, ageToInput: number }>();
 
   return (
     <HStack as="form" onSubmit={handleSubmit((data) => {
-      console.log("submitting", data);
       setEditing(false);
-      setAgeFrom(Number(data.ageFromInput));
-      setAgeTo(data.ageToInput);
+      setAgeRange(data.ageFromInput, data.ageToInput);
     })}>
       <Field.Root>
         <Field.Label>Age from</Field.Label>
