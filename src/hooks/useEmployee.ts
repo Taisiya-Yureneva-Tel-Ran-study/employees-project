@@ -7,6 +7,7 @@ import { getDateFromAge } from "../util/functions";
 
 export default function useEmployee() {
     const query = useEmployeeFilters();
+    
     const config: AxiosRequestConfig = {params: {
         department: query.department,
         salary_gte: query.salaryFrom,

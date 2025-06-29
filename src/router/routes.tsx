@@ -6,6 +6,8 @@ import SalaryStatisticsPage from "../pages/SalaryStatisticsPage";
 import DepartmentStatisticsPage from "../pages/DepartmentStatisticsPage";
 import Layout from "../pages/Layout";
 import StatisticsPage from "../pages/StatisticsPage";
+import LoginPage from "../pages/LoginPage";
+import LogoutPage from "../pages/LogoutPage";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,8 @@ const router = createBrowserRouter([
         {path:"salary", element:<SalaryStatisticsPage/>},
         {path:"department", element:<DepartmentStatisticsPage/>}
       ]},
+      { path: "login", element: <LoginPage />},
+      { path: "logout", element: <LogoutPage />}
     ],
   },
 ]);

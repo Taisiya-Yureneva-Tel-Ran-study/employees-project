@@ -9,6 +9,7 @@ const Nav = () => {
         <RouterLink to="/"> <Text>Home</Text></RouterLink>
         <RouterLink to="/add"> <Text>Add Employee</Text></RouterLink>
         <StatisticsSelector></StatisticsSelector>
+        <RouterLink to="/login"> <Text>Login</Text></RouterLink>
         <ColorModeButton></ColorModeButton>
     </HStack>
   )

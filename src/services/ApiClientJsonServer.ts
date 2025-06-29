@@ -2,11 +2,21 @@ import { Employee } from "../model/dto-types";
 import ApiClient, { Updater } from "./ApiClient";
 import axios, { AxiosRequestConfig } from "axios";
 
-const axiosIstance = axios.create({
-    baseURL: "http://localhost:3000/employees"
+const BASE_URL = "http://localhost:3000/employees";
+
+let axiosIstance = axios.create({
+    baseURL: BASE_URL, // "http://localhost:3000/employees"
 })
 
 class ApiClientJsonServer implements ApiClient {
+    setToken(token: string): void {
+        axiosIstance = axios.create({
+            baseURL: BASE_URL,
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+    }
     async getEmployee(id: string): Promise<Employee> {
          const res = await axiosIstance.get<Employee>(`/${id}`);
          return res.data;

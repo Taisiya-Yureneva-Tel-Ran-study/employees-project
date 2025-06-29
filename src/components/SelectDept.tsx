@@ -6,7 +6,8 @@ import MotionComponent from './MotionComponent'
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 
 const SelectDept: FC = () => {
-  const {department, setDepartment} = useEmployeeFilters();
+  const department = useEmployeeFilters(s => s.department);
+  const setDepartment = useEmployeeFilters(s => s.setDepartment);
   const [isOpen, setIsOpen] = useState<Boolean>(false);
 
   return (
