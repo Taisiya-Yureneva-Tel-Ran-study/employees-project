@@ -11,18 +11,18 @@ const Nav: FC = () => {
   return (
     <HStack justifyContent={"space-between"} marginLeft={"4vw"}>
       {userData ? <>
-        <Text>{userData.email}</Text> 
+        <Text>{userData.email}</Text>
         <RouterLink to="/"> <Text>Home</Text></RouterLink>
         <StatisticsSelector></StatisticsSelector>
         <RouterLink to="/logout"> <Text>LogOut</Text></RouterLink>
 
-      {userData.role === "ADMIN" ? 
-        <RouterLink to="/add"> <Text>Add Employee</Text></RouterLink>
-         : <></>}
-        </> :
+        {userData.role === "ADMIN" ?
+          <RouterLink to="/add"> <Text>Add Employee</Text></RouterLink>
+          : <></>}
+      </> :
         <RouterLink to="/login"> <Text>Login</Text></RouterLink>
       }
-      <ColorModeButton></ColorModeButton> 
+      <ColorModeButton></ColorModeButton>
     </HStack>
   )
 }

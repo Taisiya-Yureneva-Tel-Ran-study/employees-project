@@ -1,3 +1,1 @@
-#### HW #43. Created Employees table. Used useQuery.
-
-####
+#### HW #47 Navigator shows different options depending on userData (authenticated user).
