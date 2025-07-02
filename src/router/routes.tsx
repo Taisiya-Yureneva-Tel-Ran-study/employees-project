@@ -8,11 +8,13 @@ import Layout from "../pages/Layout";
 import StatisticsPage from "../pages/StatisticsPage";
 import LoginPage from "../pages/LoginPage";
 import LogoutPage from "../pages/LogoutPage";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       { path: "", element: <HomePage /> },
       { path: "add", element: <AddEmployeePage /> },

@@ -10,13 +10,10 @@ let axiosIstance = axios.create({
 
 class ApiClientJsonServer implements ApiClient {
     setToken(token: string): void {
-        axiosIstance = axios.create({
-            baseURL: BASE_URL,
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        })
+        console.log("setToken", token);
+        axiosIstance.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     }
+
     async getEmployee(id: string): Promise<Employee> {
          const res = await axiosIstance.get<Employee>(`/${id}`);
          return res.data;

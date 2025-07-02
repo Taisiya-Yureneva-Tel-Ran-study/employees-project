@@ -5,6 +5,7 @@ import { CiEdit, CiSquareCheck } from 'react-icons/ci';
 import { useForm } from 'react-hook-form';
 import { departments, minSalary, maxSalary} from "../../config/employees-config.json"
 import { MdClose } from 'react-icons/md';
+import { useAuthData } from '../state-management/store';
 
 interface Props {
     submitter: (data: Partial<Employee>) => void;
@@ -19,6 +20,7 @@ const EditField: FC<Props> = ({submitter, field, prevValue}) => {
         department: field === "department" ? prevValue as string : undefined,
         salary: field === "salary" ? prevValue as number : undefined
     }});
+    const userData = useAuthData(s => s.userData);
 
   return (
     <>
@@ -43,7 +45,7 @@ const EditField: FC<Props> = ({submitter, field, prevValue}) => {
             </span>
         </HStack> : <HStack justifyContent="space-between" width={"80%"}>
             <Text>{value}</Text>
-            <IconButton onClick={() => setEditing(true)} size={"xs"} variant="outline" ><CiEdit /></IconButton>
+            <IconButton hidden={userData?.role !== "ADMIN"} onClick={() => setEditing(true)} size={"xs"} variant="outline" ><CiEdit /></IconButton>
         </HStack>
     }
     </>

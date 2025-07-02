@@ -1,5 +1,5 @@
 import { MutationFunction } from "@tanstack/react-query";
-import { Avatar, Spinner, Stack, Table, Text, Button} from "@chakra-ui/react";
+import { Avatar, Spinner, Stack, Table, Button} from "@chakra-ui/react";
 import { useColorModeValue } from "../components/ui/color-mode";
 import { FC } from "react";
 import useEmployeesMutation from "../hooks/useEmployeesMutation";
@@ -18,16 +18,16 @@ const EmployeesTable:FC<Props> = ({deleteFn, updateFn}) => {
     isLoading,
   } = useEmployee();
 
+  if (error) {
+    throw error;
+  }
+
   const mutationDel = useEmployeesMutation(deleteFn);
   const mutationUpdate = useEmployeesMutation(updateFn);
 
   const bg = useColorModeValue("red.500", "red.200");
   return (
     <>
-      {error ? 
-        <Text color={"red"} fontSize={"2xl"}>{error.message}</Text>
-      : 
-        <>
           {isLoading && <Spinner />}
           <Stack
             height={"100%"}
@@ -81,8 +81,6 @@ const EmployeesTable:FC<Props> = ({deleteFn, updateFn}) => {
               </Table.Root>
             </Table.ScrollArea>
           </Stack>
-        </>
-      }
     </>
   );
 };
