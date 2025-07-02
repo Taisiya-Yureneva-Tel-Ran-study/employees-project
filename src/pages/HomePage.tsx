@@ -4,10 +4,9 @@ import { Updater } from '../services/ApiClient'
 import { Stack } from '@chakra-ui/react'
 import Filters from '../components/Filters'
 import { FC } from 'react'
-import { useAuthData } from '../state-management/store'
+import EmployeePaginator from '../components/EmployeePaginator'
 
 const HomePage: FC = () => {
-  const userData = useAuthData(s => s.userData);
   return (
     
     <Stack>
@@ -17,6 +16,7 @@ const HomePage: FC = () => {
             apiClient.updateEmployee(updater as Updater)
           }
       ></EmployeesTable>
+      <EmployeePaginator />
     </Stack>
   )
 }
