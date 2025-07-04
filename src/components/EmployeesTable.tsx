@@ -1,12 +1,12 @@
 import { MutationFunction } from "@tanstack/react-query";
-import { Avatar, Spinner, Stack, Table, Button } from "@chakra-ui/react";
-import { useColorModeValue } from "../components/ui/color-mode";
+import { Avatar, Spinner, Stack, Table } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
 import useEmployeesMutation from "../hooks/useEmployeesMutation";
 import EditField from "./EditField";
 import useEmployee from "../hooks/useEmployee";
 import config from "../../config/employees-config.json"
 import { useAuthData, usePagerData } from "../state-management/store";
+import AlertDialog from "./AlertDialog";
 
 interface Props {
   deleteFn: MutationFunction,
@@ -26,16 +26,16 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
   const pageSize = config.pageSize;
   const setCount = usePagerData(s => s.setCount);
   const setPage = usePagerData(s => s.setPage);
-// useCallback is better
+
   useEffect(() => {
     const count = employees?.length || 0;
-      setCount(count);
+    setCount(count);
     if ((page - 1) * pageSize > count) {
       setPage(1);
     }
   }, [employees]);
-  
-// And here it is better to use useMemo
+
+  // And here it is better to use useMemo
   const startRange = (page - 1) * pageSize
   const endRange = startRange + pageSize
 
@@ -48,7 +48,6 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
   const mutationDel = useEmployeesMutation(deleteFn);
   const mutationUpdate = useEmployeesMutation(updateFn);
 
-  const bg = useColorModeValue("red.500", "red.200");
   return (
     <>
       {isLoading && <Spinner />}
@@ -96,10 +95,7 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
                   </Table.Cell>
                   <Table.Cell hideBelow="md">{empl.birthDate}</Table.Cell>
                   <Table.Cell hidden={user?.role !== "ADMIN"}>
-                    <Button size="xs" background={bg} onClick={() => {
-                      if (confirm("Are you sure you want to delete this employee?")) {
-                        mutationDel.mutate(empl.id);}
-                      }} disabled={mutationDel.isPending}>Delete</Button>
+                    <AlertDialog mutationDel={mutationDel} empl={empl} />
                   </Table.Cell>
                 </Table.Row>
               ))}
