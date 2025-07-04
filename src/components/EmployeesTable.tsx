@@ -1,5 +1,5 @@
 import { MutationFunction } from "@tanstack/react-query";
-import { Avatar, Spinner, Stack, Table } from "@chakra-ui/react";
+import { Avatar, Stack, Table } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
 import useEmployeesMutation from "../hooks/useEmployeesMutation";
 import EditField from "./EditField";
@@ -7,6 +7,7 @@ import useEmployee from "../hooks/useEmployee";
 import config from "../../config/employees-config.json"
 import { useAuthData, usePagerData } from "../state-management/store";
 import AlertDialog from "./AlertDialog";
+import TableSkeleton from "./TableSkeleton";
 
 interface Props {
   deleteFn: MutationFunction,
@@ -50,7 +51,6 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
 
   return (
     <>
-      {isLoading && <Spinner />}
       <Stack
         height={"100%"}
         justifyContent={"center"}
@@ -78,6 +78,7 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
               </Table.Row>
             </Table.Header>
             <Table.Body zIndex="-100">
+              {isLoading && <TableSkeleton />}
               {visibleItems?.map((empl) => (
                 <Table.Row key={empl.id} >
                   <Table.Cell hideBelow={"md"}>
