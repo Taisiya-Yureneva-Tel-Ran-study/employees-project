@@ -25,12 +25,17 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
   const page = usePagerData(s => s.page);
   const pageSize = config.pageSize;
   const setCount = usePagerData(s => s.setCount);
+  const setPage = usePagerData(s => s.setPage);
+// useCallback is better
   useEffect(() => {
-    if (employees) {
-      setCount(employees.length);
+    const count = employees?.length || 0;
+      setCount(count);
+    if ((page - 1) * pageSize > count) {
+      setPage(1);
     }
-  }, [employees, setCount]);
-
+  }, [employees]);
+  
+// And here it is better to use useMemo
   const startRange = (page - 1) * pageSize
   const endRange = startRange + pageSize
 
@@ -91,7 +96,10 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
                   </Table.Cell>
                   <Table.Cell hideBelow="md">{empl.birthDate}</Table.Cell>
                   <Table.Cell hidden={user?.role !== "ADMIN"}>
-                    <Button size="xs" background={bg} onClick={() => mutationDel.mutate(empl.id)} disabled={mutationDel.isPending}>Delete</Button>
+                    <Button size="xs" background={bg} onClick={() => {
+                      if (confirm("Are you sure you want to delete this employee?")) {
+                        mutationDel.mutate(empl.id);}
+                      }} disabled={mutationDel.isPending}>Delete</Button>
                   </Table.Cell>
                 </Table.Row>
               ))}

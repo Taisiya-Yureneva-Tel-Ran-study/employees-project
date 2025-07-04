@@ -1,27 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
-import apiClient  from "../services/ApiClientJsonServer";
-import { Employee } from "../model/dto-types";
+import apiClient from "../services/ApiClientJsonServer";
+import { Employee, SearchObject } from "../model/dto-types";
 import useEmployeeFilters from "../state-management/store";
-import { AxiosRequestConfig } from "axios";
-import { getDateFromAge } from "../util/functions";
+import _ from "lodash";
 
 export default function useEmployee() {
-    const query = useEmployeeFilters();
+    const { department, salaryFrom, salaryTo, ageFrom, ageTo } = useEmployeeFilters();
 
-    const config: AxiosRequestConfig = {params: {
-        department: query.department,
-        salary_gte: query.salaryFrom,
-        salary_lte: query.salaryTo,
-        birthDate_gte: (query.ageTo ? getDateFromAge(query.ageTo) : null),
-        birthDate_lte: (query.ageFrom ? getDateFromAge(query.ageFrom) : null),
-    }}
+    let searchObject: SearchObject | undefined = {};
+
+    department && (searchObject.department = department);
+    salaryFrom && (searchObject.minSalary = salaryFrom);
+    salaryTo && (searchObject.maxSalary = salaryTo);
+    ageFrom && (searchObject.minAge = ageFrom);
+    ageTo && (searchObject.maxAge = ageTo);
+    if (_.isEmpty(searchObject)) {
+        searchObject = undefined
+    }
 
     const qryKey: any[] = ['employees'];
-    qryKey.push(config);
+    qryKey.push(searchObject);
 
     return useQuery<Employee[], Error>({
         queryKey: qryKey,
-        queryFn: async () => apiClient.getAll(config),
+        queryFn: async () => apiClient.getAll(searchObject),
         staleTime: 3600 * 1000 * 24
     });
 }

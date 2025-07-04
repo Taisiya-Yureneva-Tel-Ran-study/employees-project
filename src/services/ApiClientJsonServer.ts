@@ -1,11 +1,12 @@
-import { Employee } from "../model/dto-types";
+import { Employee, SearchObject } from "../model/dto-types";
+import { getDateFromAge } from "../util/functions";
 import ApiClient, { Updater } from "./ApiClient";
 import axios, { AxiosRequestConfig } from "axios";
 
 const BASE_URL = "http://localhost:3000/employees";
 
 let axiosIstance = axios.create({
-    baseURL: BASE_URL, // "http://localhost:3000/employees"
+    baseURL: BASE_URL, 
 })
 
 class ApiClientJsonServer implements ApiClient {
@@ -32,9 +33,18 @@ class ApiClientJsonServer implements ApiClient {
         const res = await axiosIstance.patch<Employee>(`/${updater.id}`, updater.fields);
         return res.data
     }
-    async getAll(params?: AxiosRequestConfig): Promise<Employee[]> {
-        console.log("getAll with params", params)
-        const res = await axiosIstance.get<Employee[]>("/", params);
+    async getAll(params?: SearchObject): Promise<Employee[]> {
+        const config: AxiosRequestConfig = {params: {
+            department: params?.department,
+            salary_gte: params?.minSalary,
+            salary_lte: params?.maxSalary,
+            birthDate_lte: (params?.minAge ? getDateFromAge(params?.minAge) : null),
+            birthDate_gte: (params?.maxAge ? getDateFromAge(params?.maxAge) : null),
+        }}
+
+        console.log("getAll with params", params, config);
+
+        const res = await axiosIstance.get<Employee[]>("/", config);
         return res.data;
     }
     
