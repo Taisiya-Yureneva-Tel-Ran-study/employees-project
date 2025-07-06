@@ -3,25 +3,25 @@ import { Avatar, Stack, Table } from "@chakra-ui/react";
 import { FC, useEffect, useMemo } from "react";
 import useEmployeesMutation from "../hooks/useEmployeesMutation";
 import EditField from "./EditField";
-import useEmployee from "../hooks/useEmployee";
 import config from "../../config/employees-config.json"
 import { useAuthData, usePagerData } from "../state-management/store";
 import AlertDialog from "./AlertDialog";
 import TableSkeleton from "./TableSkeleton";
 import { Employee } from "../model/dto-types";
+import useEmployeesQuery from "../hooks/useEmployeesQuery";
 
 interface Props {
   deleteFn: MutationFunction,
   updateFn: MutationFunction,
-  getFn:    QueryFunction<Employee[], any>
+  getFn:    QueryFunction<Employee[]>,
+  queryKey: any[]
 }
 
-const EmployeesTable: FC<Props> = ({ deleteFn, updateFn, getFn }) => {
+const EmployeesTable: FC<Props> = ({ deleteFn, updateFn, getFn, queryKey }) => {
   const {
     data: employees,
-    error,
     isLoading,
-  } = useEmployee(getFn);
+  } = useEmployeesQuery(queryKey, getFn);
 
   const user = useAuthData(s => s.userData);
 
@@ -45,10 +45,6 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn, getFn }) => {
   }, [page])
 
   const visibleItems = employees?.slice(startRange, endRange)
-
-  if (error) {
-    throw error;
-  }
 
   const mutationDel = useEmployeesMutation(deleteFn);
   const mutationUpdate = useEmployeesMutation(updateFn);

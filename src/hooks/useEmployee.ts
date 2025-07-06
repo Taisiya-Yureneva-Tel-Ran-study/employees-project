@@ -20,9 +20,14 @@ export default function useEmployee(queryFn: QueryFunction<Employee[], any>) {
     const qryKey: any[] = ['employees'];
     qryKey.push(searchObject);
 
-    return useQuery<Employee[], Error>({
+    const res = useQuery<Employee[], Error>({
         queryKey: qryKey,
         queryFn: queryFn,
         staleTime: 3600 * 1000 * 24
     });
+
+    if (res.error) {
+        throw res.error;
+    }
+    return res;
 }
