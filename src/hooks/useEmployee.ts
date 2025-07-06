@@ -1,10 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import apiClient from "../services/ApiClientJsonServer";
+import { QueryFunction, useQuery } from "@tanstack/react-query";
 import { Employee, SearchObject } from "../model/dto-types";
 import useEmployeeFilters from "../state-management/store";
 import _ from "lodash";
 
-export default function useEmployee() {
+export default function useEmployee(queryFn: QueryFunction<Employee[], any>) {
     const { department, salaryFrom, salaryTo, ageFrom, ageTo } = useEmployeeFilters();
 
     let searchObject: SearchObject | undefined = {};
@@ -23,7 +22,7 @@ export default function useEmployee() {
 
     return useQuery<Employee[], Error>({
         queryKey: qryKey,
-        queryFn: async () => apiClient.getAll(searchObject),
+        queryFn: queryFn,
         staleTime: 3600 * 1000 * 24
     });
 }

@@ -5,6 +5,7 @@ import { Stack } from '@chakra-ui/react'
 import Filters from '../components/Filters'
 import { FC } from 'react'
 import EmployeePaginator from '../components/EmployeePaginator'
+import { SearchObject } from '../model/dto-types'
 
 const HomePage: FC = () => {
   return (
@@ -15,7 +16,12 @@ const HomePage: FC = () => {
           updateFn={(updater) => 
             apiClient.updateEmployee(updater as Updater)
           }
-      ></EmployeesTable>
+          getFn={(qryKey) => {
+            const searchObject = qryKey.queryKey[1] as SearchObject;
+            return apiClient.getAll(searchObject as SearchObject);
+          }
+          }
+      />
       <EmployeePaginator />
     </Stack>
   )

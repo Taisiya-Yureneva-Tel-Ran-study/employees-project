@@ -11,7 +11,7 @@ const Nav: FC = () => {
   return (
     <HStack justifyContent={"space-between"} marginLeft={"4vw"}>
       {userData ? <>
-        <Text>{userData.email}</Text>
+        <Text hideBelow={"md"}>{userData.email}</Text>
         <RouterLink to="/"> <Text>Home</Text></RouterLink>
         <StatisticsSelector></StatisticsSelector>
         <RouterLink to="/logout"> <Text>LogOut</Text></RouterLink>

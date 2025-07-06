@@ -1,6 +1,6 @@
-import { MutationFunction } from "@tanstack/react-query";
+import { MutationFunction, QueryFunction } from "@tanstack/react-query";
 import { Avatar, Stack, Table } from "@chakra-ui/react";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import useEmployeesMutation from "../hooks/useEmployeesMutation";
 import EditField from "./EditField";
 import useEmployee from "../hooks/useEmployee";
@@ -8,18 +8,20 @@ import config from "../../config/employees-config.json"
 import { useAuthData, usePagerData } from "../state-management/store";
 import AlertDialog from "./AlertDialog";
 import TableSkeleton from "./TableSkeleton";
+import { Employee } from "../model/dto-types";
 
 interface Props {
   deleteFn: MutationFunction,
-  updateFn: MutationFunction
+  updateFn: MutationFunction,
+  getFn:    QueryFunction<Employee[], any>
 }
 
-const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
+const EmployeesTable: FC<Props> = ({ deleteFn, updateFn, getFn }) => {
   const {
     data: employees,
     error,
     isLoading,
-  } = useEmployee();
+  } = useEmployee(getFn);
 
   const user = useAuthData(s => s.userData);
 
@@ -36,9 +38,11 @@ const EmployeesTable: FC<Props> = ({ deleteFn, updateFn }) => {
     }
   }, [employees]);
 
-  // And here it is better to use useMemo
-  const startRange = (page - 1) * pageSize
-  const endRange = startRange + pageSize
+  const {startRange, endRange} = useMemo(() => {
+    const startRange = (page - 1) * pageSize;
+    const endRange = startRange + pageSize;
+    return {startRange, endRange}
+  }, [page])
 
   const visibleItems = employees?.slice(startRange, endRange)
 

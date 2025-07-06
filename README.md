@@ -5,3 +5,4 @@
 #### HW #49. 
 ### Table skeleton instead of spinner on data loading.
 ### Dialog for employee deletion confirmation.
+### queryFn instead of useEmployees
